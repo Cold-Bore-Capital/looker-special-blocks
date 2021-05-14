@@ -9,6 +9,10 @@ view: completed_time_block_filter {
       value: "no_filter"
     }
     allowed_value: {
+      label: "Last Data"
+      value: "last_data"
+    }
+    allowed_value: {
       label: "Day"
       value: "day"
     }
