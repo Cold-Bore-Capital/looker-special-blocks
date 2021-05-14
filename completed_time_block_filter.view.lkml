@@ -9,8 +9,8 @@ view: completed_time_block_filter {
     hidden:  yes
     # Important note. This must be get_date, not current_date. current_date can't be timezone converted as it has no time. The system will assume midnight for the
     # conversion leading to bad results.
-    sql: date({% case last_data._parameter_value %}
-            {% when "yes" %}
+    sql: date({% case filter_to_last_completed._parameter_value %}
+            {% when "last_data" %}
               (select max(${event_date}) from ${table_name})
             {% else %}
               current_date
@@ -18,20 +18,6 @@ view: completed_time_block_filter {
     # convert_tz: no
   }
 
-  parameter: last_data {
-    label: "Last Data Filter"
-    view_label: "Special Filters"
-    type: unquoted
-    allowed_value: {
-      label: "No Filter"
-      value: "no"
-    }
-    allowed_value: {
-      label: "Filter to Last Data"
-      value: "yes"
-    }
-    default_value: "no"
-  }
 
   parameter: filter_to_last_completed {
     label: "1. Filter to Last Completed"
@@ -42,7 +28,7 @@ view: completed_time_block_filter {
       value: "no_filter"
     }
     allowed_value: {
-      label: "Last Data"
+      label: "Day - Last Data"
       value: "last_data"
     }
     allowed_value: {
