@@ -11,7 +11,7 @@ view: completed_time_block_filter {
     # conversion leading to bad results.
     sql: date({% case filter_to_last_completed._parameter_value %}
             {% when "last_data" %}
-              (select max(${event_date}) from ${table_name})
+              (select max(${event_date}) from ${origin_table_name})
             {% else %}
               current_date
             {% endcase %});;
@@ -62,12 +62,14 @@ view: completed_time_block_filter {
     default_value: "0"
   }
 
+  # Filter to the last point where you found data.
   dimension: filter_to_the_last_value_dim {
     type: number
     sql: {% parameter filter_to_the_last_value %} ;;
     hidden: yes
   }
 
+  # Filter to the last completed day, week, month, year
   dimension: filter_to_last_completed_dim {
     type: string
     sql: {% parameter filter_to_last_completed %} ;;
